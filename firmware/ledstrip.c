@@ -21,17 +21,17 @@
 #include "pca9685.h"
 
 /*  
- OC2B: PWM ~OE
+    OC2B: PWM ~OE
 
- OC1A: G
- OC1B: R
- OC0A: B
- OC0B: W 
+    OC1A: G
+    OC1B: R
+    OC0A: B
+    OC0B: W
 
- PB0: nRF24L01+ CSN
- PD7: nRF24L01+ CE
+    PB0: nRF24L01+ CSN
+    PD7: nRF24L01+ CE
  
- PD4: ~LED 
+    PD4: ~LED
 */
 
 
@@ -56,46 +56,46 @@ void setledpwm(unsigned int channel, unsigned char value) {
     if (ch == 0) {
 
       if (value == 0) {
-	TCCR1A &=~ _BV(COM1A1);      
+        TCCR1A &=~ _BV(COM1A1);
       } else {
-	OCR1A = ciel10bit(value); // Green
-	TCCR1A |= _BV(COM1A1);
+        OCR1A = ciel10bit(value); // Green
+        TCCR1A |= _BV(COM1A1);
       }
 
     } else if (ch == 1) {
 
       if (value == 0) {
-	TCCR1A &=~ _BV(COM1B1);      
+        TCCR1A &=~ _BV(COM1B1);
       } else {
-	OCR1B = ciel10bit(value); // Red
-	TCCR1A |= _BV(COM1B1);
+        OCR1B = ciel10bit(value); // Red
+        TCCR1A |= _BV(COM1B1);
       }      
 
     } else if (ch == 2) {
 
       if (value == 0) {
-	TCCR0A &=~ _BV(COM0A1);
+        TCCR0A &=~ _BV(COM0A1);
       } else {
-	OCR0A = ciel8bit(value); // Blue
-	TCCR0A |= _BV(COM0A1); // OC0A clear on match
+        OCR0A = ciel8bit(value); // Blue
+        TCCR0A |= _BV(COM0A1); // OC0A clear on match
       }
 
     } else if (ch == 3) {
 
       if (value == 0) {
-	TCCR0A &=~ _BV(COM0B1);
+        TCCR0A &=~ _BV(COM0B1);
       } else {
-	OCR0B = ciel8bit(value); // White
-	TCCR0A |= _BV(COM0B1); // OC0B clear on match
+        OCR0B = ciel8bit(value); // White
+        TCCR0A |= _BV(COM0B1); // OC0B clear on match
       }
 
     } else if (ch == 4) {
 
       if (value == 0) {
-	TCCR2B &=~ _BV(COM2B1);
+        TCCR2B &=~ _BV(COM2B1);
       } else {
-	OCR2B = ciel8bit(value); // Common enable
-	TCCR2B |= _BV(COM2B1); // OC0B clear on match
+        OCR2B = ciel8bit(value); // Common enable
+        TCCR2B |= _BV(COM2B1); // OC0B clear on match
       }
     }
 
@@ -117,13 +117,13 @@ int main(void) {
   DDRB |= _BV(PB1);
   DDRB |= _BV(PB2);
 
-  //  initADC();
+//  initADC();
   muartInit();
 
   mprintf(PSTR("Power up\n"));
 
 
-  // Set up timer 0 for fast PWM mode & the highest frequency available
+// Set up timer 0 for fast PWM mode & the highest frequency available
   TCCR0A =  _BV(WGM00) |  _BV(WGM01); // Fast PWM
   TCCR0B = _BV(CS00); // Fastest clock source
 
@@ -135,7 +135,7 @@ int main(void) {
 
 
 
-  // Set up timer 1 for fast PWM mode & the highest frequency available
+// Set up timer 1 for fast PWM mode & the highest frequency available
   TCCR1A = _BV(WGM12) | _BV(WGM11) | _BV(WGM10); // 10 bit fast pwm
 
   TCCR1A |= _BV(COM1A1); // OC1A clear on match
@@ -147,7 +147,7 @@ int main(void) {
   DDRB  |= _BV(PB2);  // OC1B
 
 
-  // Set up timer 2 for fast PWM mode & the highest frequency available
+// Set up timer 2 for fast PWM mode & the highest frequency available
   TCCR2A =  _BV(WGM20) |  _BV(WGM21); // Fast PWM
   TCCR2B = _BV(CS20); // Fastest clock source
 
