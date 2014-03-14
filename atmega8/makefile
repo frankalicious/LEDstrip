@@ -27,6 +27,9 @@ SIZE=avr-size
 CFLAGS  = -Wall -pedantic-errors -Werror -mcall-prologues -mmcu=$(AVR) -std=c99 -g
 CFLAGS  += -I$(FW)
 
+CFLAGS += -Wall -Wextra -pedantic -Wundef -Wshadow \
+	-Wmissing-prototypes -Wmissing-declarations \
+	-Wredundant-decls -Wunreachable-code
 
 # Optimization flags, :
 
