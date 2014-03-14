@@ -62,7 +62,7 @@ LDFLAGS += -Wl,--relax
 #LDFLAGS += -lm
 
 program : $(PROJ)-o.hex
-	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 1 -e -U flash:w:$(PROJ)-o.hex
+	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 10 -e -U flash:w:$(PROJ)-o.hex
 
 bin : $(PROJ).hex
 
@@ -85,11 +85,23 @@ $(PROJ)-o.hex : $(OBJS) $(INTERMEDIATE)
 
 # Internal oscilator 8MHz, no prescaler, BOD=4.3V
 fuses8int5v:
-	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 100 -U lfuse:w:0xe2:m -U hfuse:w:0xd4:m
+#	atmega168
+	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 10 -U lfuse:w:0xe2:m -U hfuse:w:0xd1:m
 
 # Internal oscilator 8MHz, no prescaler, BOD=2.7V
 fuses8int3v:
-	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 100 -U lfuse:w:0xe2:m -U hfuse:w:0xd5:m
+#	atmega168
+#	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 10 -U lfuse:w:0xe2:m -U hfuse:w:0xd5:m
+#	atmega328. 8mhz internal
+	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 10 -U lfuse:w:0xe2:m -U hfuse:w:0xd1:m -U efuse:w:0xfd:m
+#	atmega328. 8mhz internal, debugWIRE Enable
+#	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 10 -U lfuse:w:0xe2:m -U hfuse:w:0x91:m -U efuse:w:0xfd:m
+
+#	atmega328. 1mhz internal
+#	avrdude $(AVR_PROGRAMMER) -p $(AVR) -B 10 -U lfuse:w:0xe2:m -U hfuse:w:0xd1:m -U efuse:w:0xfd:m
 
 clean :
 	rm -f $(PROJ).hex $(PROJ).elf $(PROJ).map $(OBJS) $(INTERMEDIATE)
+
+# server:
+#	avarice -w --file $(PROJ).elf -p $(AVR) -j usb :4242 --mkII
