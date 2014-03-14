@@ -1,7 +1,7 @@
 #include "adchelper.h"
 #include <avr/io.h>
 
-void initADC() {
+void initADC(void) {
   ADCSRA |= 1<<ADEN; // Enable ADC
 }
 

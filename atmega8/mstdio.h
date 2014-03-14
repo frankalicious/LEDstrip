@@ -27,10 +27,10 @@
 void muartInit(void);
 
 // True if a character is ready to be read from the uart
-char mchready();
+char mchready(void);
 
 // A single character from the uart, will block if none is ready.
-char mgetch();
+char mgetch(void);
 
 // Send a single char via the uart
 void mputchar(const char c);
@@ -49,3 +49,5 @@ void mfprintf(void (*putchar)(const char), PGM_P format, ...);
 
 // This is the underlying implementation, use it to build output to other channels.
 void mvfprintf(void (*putchar)(const char), PGM_P format, va_list ap);
+
+void sputchar(char c);

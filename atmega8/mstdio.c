@@ -28,11 +28,11 @@ void mputs(char *c) {
   }
 }  
 
-char mchready() {
+char mchready(void) {
   return UCSR0A & _BV(RXC0);
 }
 
-char mgetch() {
+char mgetch(void) {
   while (!mchready()) { }
   return UDR0;
 }

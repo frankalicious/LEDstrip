@@ -38,7 +38,7 @@ void uart_init(void) {
  * is empty.
  */
 int uart_putchar(char c, FILE *stream){
-
+  (void) stream ;
   //  if (c == '\n')
   //uart_putchar('\r', stream);
   loop_until_bit_is_set(UCSR0A, UDRE0);
@@ -49,7 +49,7 @@ int uart_putchar(char c, FILE *stream){
 }
 
 int uart_getchar(FILE *stream) {
-
+  (void) stream ;
   if (UCSR0A & 1<<RXC0) {
 	if (UCSR0A & _BV(FE0))
 	  return _FDEV_EOF;
