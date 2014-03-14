@@ -86,3 +86,9 @@ uint8_t spi_fast_shift (uint8_t data)
     return SPDR;
 }
 
+void spi_read_data(uint8_t * datain, uint8_t len) {
+	uint8_t i;
+	for (i = 0; i < len; i++) {
+		datain[i] = spi_fast_shift(0x00);
+	}
+}
